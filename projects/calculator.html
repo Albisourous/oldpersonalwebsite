@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+    <title>Albin's Calculator</title>
+    <link rel="shortcut icon" type="image/png" href="../images/icon.png">
+</head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../style/style.css">
+<body style="background-color:black;color:white;">
+<nav>
+    <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../cv.html">CV</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+        <li><a href="../projects.html">Projects</a></li>
+    </ul>
+</nav>
+<br>
+<br>
+<p> Calculator for grade in 429. </p>
+
+<h1 id="answer"></h1>
+<h1 id="takeF"></h1>
+<h1 id="getA"></h1>
+<h1 id="pass"></h1>
+
+<br>
+<br>
+Test 1 (%) <input type="text" id="t1">
+<br>
+<br>
+Test 2 (%) <input type="text" id="t2">
+<br>
+<br>
+Test 3 (%) <input type="text" id="t3">
+<br>
+<br>
+Final (%/ put 0 if you are not taking the final) <input type="text" id="fin">
+<br>
+<br>
+Avg on labs (% can find on canvas) <input type="text" id="labs">
+<br>
+<br>
+Avg on homework assignments (% can find on canvas) <input type="text" id="hw">
+<br>
+<br>
+Did you do eCIS (0 = no/ 1 = yes) <input type="text" id="eCIS">
+<br>
+<br>
+<button onclick="calculate()"> Calculate</button>
+<br>
+<br>
+<br>
+<br>
+<p> Calculator for grade in SDS 321. </p>
+<h1 id="answerS"></h1>
+<br>
+<br>
+Test 1 (%) <input type="text" id="s1">
+<br>
+<br>
+Test 2 (%) <input type="text" id="s2">
+<br>
+<br>
+Test 3 (%/ 0 if you want to find out what you need) <input type="text" id="s3">
+<br>
+<br>
+HW (% on canvas) <input type="text" id="hwS">
+<br>
+<br>
+Bonus (0-10 of percentage) <input type="text" id="bonus">
+<br>
+<br>
+<button onclick="calculateS()"> Calculate</button>
+
+<script>
+
+    function calculate() {
+        var E1 = document.getElementById("t1").value;
+        var E2 = document.getElementById("t2").value;
+        var E3 = document.getElementById("t3").value;
+        var e = document.getElementById("eCIS").value;
+        var l = document.getElementById("labs").value;
+        var h = document.getElementById("hw").value;
+        var f = document.getElementById("fin").value;
+
+        var values = [parseFloat(E1), parseFloat(E2), parseFloat(E3)];
+        values.sort((a, b) => b - a).slice(0, 1);
+
+        var topG = ((values[0] + values[1]) / 2.0) * .3;
+        var final;
+        if (f > 0) {
+            final = parseFloat(f) * .2;
+        } else {
+            final = (((parseFloat(E1) + parseFloat(E2) + parseFloat(E3)) / 3.) * .2) + parseFloat(e);
+        }
+        var lab = parseFloat(l) * .35;
+        var homework = parseFloat(h) * .15;
+
+        var result = final + topG + lab + homework;
+
+        if (!isNaN(result)) {
+            document.getElementById("answer").innerHTML = "Grade is " + result + "%";
+        }
+        if (result >= 93 && f == 0) {
+            document.getElementById("takeF").innerHTML = "You do not have to take the final";
+        } else if (f == 0) {
+            var a = (93 - (topG + lab + homework + parseFloat(e))) / .2;
+            document.getElementById("getA").innerHTML = "You need an " + a + "% on the final to get an A";
+            var p = (70 - (topG + lab + homework + parseFloat(e))) / .2;
+            document.getElementById("pass").innerHTML = "You need an " + p + "% on the final to pass the class";
+        }
+    }
+
+    function calculateS() {
+        var S1 = document.getElementById("s1").value;
+        var S2 = document.getElementById("s2").value;
+        var S3 = document.getElementById("s3").value;
+        var hw = document.getElementById("hwS").value;
+        var b = document.getElementById("bonus").value;
+        var result = 0;
+        if (!isNaN(result) && S3 != 0) {
+            result = (parseFloat(S1) + parseFloat(S2) + parseFloat(S3) + parseFloat(hw) + parseFloat(b)) / 4.0;
+            document.getElementById("answerS").innerHTML = "Grade in SDS 321 is " + result + "%";
+        } else {
+            result = (94.0 * 4) - (parseFloat(S1) + parseFloat(S2) + parseFloat(hw) + parseFloat(b));
+            document.getElementById("answerS").innerHTML = "You need a " + result + "% on E3 to get an A";
+        }
+    }
+
+</script>
+
+</body>
+</html>

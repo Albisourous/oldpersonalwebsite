@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Albin's Website</title>
+    <link rel="shortcut icon" type="image/png" href="../images/icon.png"/>
+</head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="../style/style.css"/>
+<body style="background-color:black;color:white;">
+<nav>
+    <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../cv.html">CV</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+        <li><a href="../projects.html">Projects</a></li>
+    </ul>
+</nav>
+<br/>
+<br/>
+<br/>
+<p>This is a game I made using a tutorial.</p>
+<h1 id="t"></h1>
+<h1 id="s"></h1>
+<canvas id="gc" width="600" height="600"></canvas>
+<script>
+    window.onload = function () {
+        canv = document.getElementById("gc");
+        ctx = canv.getContext("2d");
+        document.addEventListener("keydown", keyPush);
+        setInterval(game, 60);
+    };
+    posx = posy = 10;
+    game_size = 30;
+    tc = 20;
+    foodx = foody = 5;
+    xv = yv = 0;
+    trail = [];
+    tail = 1;
+    document.getElementById("t").innerHTML = "Top: " + 0;
+
+    function game() {
+        posx += xv;
+        posy += yv;
+        if (posx < 0) {
+            posx = tc - 1;
+        }
+        if (posx > tc - 1) {
+            posx = 0;
+        }
+        if (posy < 0) {
+            posy = tc - 1;
+        }
+        if (posy > tc - 1) {
+            posy = 0;
+        }
+        ctx.fillStyle = "black";
+        canv.style.border = '1px solid #fff';
+        ctx.strokeRect(0, 0, canv.width, canv.height);
+        ctx.fillRect(0, 0, canv.width, canv.height);
+
+        ctx.fillStyle = "blue";
+        for (var i = 0; i < trail.length; i++) {
+            ctx.fillRect(trail[i].x * game_size, trail[i].y * game_size, game_size - 2, game_size - 2);
+            if (trail[i].x == posx && trail[i].y == posy) {
+                document.getElementById("t").innerHTML = "Longest tail: " + tail;
+                tail = 1;
+                document.getElementById("s").innerHTML = "Tail: " + tail;
+            }
+        }
+        trail.push({x: posx, y: posy});
+        while (trail.length > tail) {
+            trail.shift();
+        }
+
+        if (foodx == posx && foody == posy) {
+            tail++;
+            document.getElementById("s").innerHTML = "Tail: " + tail;
+            foodx = Math.floor(Math.random() * tc);
+            foody = Math.floor(Math.random() * tc);
+        }
+        ctx.fillStyle = "red";
+        ctx.fillRect(foodx * game_size, foody * game_size, game_size - 2, game_size - 2);
+    }
+
+    function keyPush(evt) {
+        switch (evt.keyCode) {
+            case 37:
+                xv = -1;
+                yv = 0;
+                break;
+            case 38:
+                xv = 0;
+                yv = -1;
+                break;
+            case 39:
+                xv = 1;
+                yv = 0;
+                break;
+            case 40:
+                xv = 0;
+                yv = 1;
+                break;
+        }
+    }
+</script>
+</body>
+</html>

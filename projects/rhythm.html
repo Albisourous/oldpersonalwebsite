@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+    <title>Albin's Website</title>
+    <link rel="shortcut icon" type="image/png" href="../images/icon.png">
+</head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../style/style.css">
+<body style="background-color:black;color:white;">
+<nav>
+    <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../cv.html">CV</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+        <li><a href="../projects.html">Projects</a></li>
+    </ul>
+</nav>
+<br>
+<br>
+<br>
+<h1>Working on a rhythm game that is based on DDR which can be played on this page.</h1>
+<canvas id="gc" width="800" height="800"></canvas>
+
+<script>
+    window.onload = function () {
+        canv = document.getElementById("gc");
+        ctx = canv.getContext("2d");
+        document.addEventListener("keydown", keyPush);
+        setInterval(game, 60);
+    };
+
+    function game() {
+
+    }
+
+    function keyPush(evt) {
+        switch (evt.keyCode) {
+            case 37:
+                xv = -1;
+                yv = 0;
+                break;
+            case 38:
+                xv = 0;
+                yv = -1;
+                break;
+            case 39:
+                xv = 1;
+                yv = 0;
+                break;
+            case 40:
+                xv = 0;
+                yv = 1;
+                break;
+        }
+    }
+
+</script>
+</body>
+</html>
